@@ -22,6 +22,8 @@
     "@types/react-dom": "^18.0.2",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
+    "autoprefixer": "^10.4.4",
+    "css-loader": "^6.7.1",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -33,8 +35,10 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.4.0",
     "postcss-loader": "^6.2.1",
+    "prettier": "^2.6.2",
     "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.72.0",
@@ -42,6 +46,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "npm run eslint"
+    "src/**/*.{js,jsx,ts,tsx}": "npm run eslint",
+    "src/**/*.{css,scss,json}": "prettier --write"
   }
 }

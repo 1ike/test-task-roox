@@ -19,14 +19,21 @@ module.exports = {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              modules: true,
+              modules: {
+                localIdentName: "[local]--[hash:base64:5]",
+              },
               importLoaders: 1,
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
               postcssOptions: {
                 plugins: [
                   [
                     "autoprefixer",
                     {
-                      "browserslist": [
+                      "overrideBrowserslist": [
                         "last 2 version",
                         "> 1%",
                         "IE 10"
@@ -36,9 +43,6 @@ module.exports = {
                 ],
               },
             }
-          }, {
-            loader: 'postcss-loader',
-            options: { sourceMap: true }
           }, {
             loader: 'sass-loader',
             options: { sourceMap: true }
