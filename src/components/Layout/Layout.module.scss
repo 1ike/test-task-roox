@@ -12,8 +12,8 @@
   background: #bdbdbd;
 
   h2 {
-    font-size: 12px;
-    line-height: 14px;
+    @include small-text;
+
     font-weight: 400;
     margin-top: 0;
   }

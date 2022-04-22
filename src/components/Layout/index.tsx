@@ -3,11 +3,11 @@ import React from 'react';
 import styles from './Layout.module.scss';
 import Button from '../uiKit/Button';
 
-interface PropsInterface {
+interface IProps {
   children: React.ReactNode,
 }
 
-const Layout = ({ children }: PropsInterface) => {
+const Layout = ({ children }: IProps) => {
   return (
     <main className={styles.main}>
       <aside className={styles.aside}>
