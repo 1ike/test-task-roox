@@ -4,12 +4,12 @@ import cn from 'classnames';
 import styles from './Button.module.scss';
 
 
-interface IProps {
+interface Props {
   children: React.ReactNode,
   overridingClass?: String,
 }
 
-const Button = ({ children, overridingClass = '' }: IProps) => {
+const Button = ({ children, overridingClass = '' }: Props) => {
   return (
     <button
       className={cn(styles.button, overridingClass)}

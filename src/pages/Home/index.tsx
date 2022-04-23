@@ -1,39 +1,13 @@
 import React from 'react';
-import cn from 'classnames';
 
 import styles from './Home.module.scss';
 import Header from '../../components/Header';
-import Button from '../../components/uiKit/Button';
+import Card from './Card';
+// import { useGetUsersQuery } from '../../services/users';
 
 
-interface Address {
-  street: string,
-  city: string,
-  zipcode: string,
-}
-
-interface Company {
-  name: string,
-}
-
-interface User {
-  id: number
-  name: string,
-  username: string,
-  email: string,
-  address: Address,
-  phone: string,
-  website: string,
-  company: Company,
-}
-
-
-interface Props {
-  user: User,
-  containerClassName: string,
-}
-
-
+const error = false;
+// const isLoading = false;
 const users = [
   {
     id: 1,
@@ -267,46 +241,40 @@ const users = [
   },
 ];
 
-const Card = ({ user, containerClassName }: Props) => {
-  const userDetails = [
-    { title: 'ФИО', value: user.name },
-    { title: 'город', value: user.address.city },
-    { title: 'компания', value: user.company.name },
-  ];
 
-  return (
-    <article className={cn(styles.card, containerClassName)}>
-      <div className={styles.details}>
-        {userDetails.map((detail, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className={styles.detail} key={idx}>
-            <span className={styles.detailTitle}>
-              {detail.title}
-              :
-            </span>
-            <span className={styles.detailValue}>{detail.value}</span>
-          </div>
-        ))}
-      </div>
-      <Button overridingClass={styles.button}>Подробнее</Button>
-    </article>
-  );
-};
+interface Props {
+  children: React.ReactNode,
+}
 
+const Wrapper = ({ children }: Props) => (
+  <div className={styles.content}>
+    <Header>Список пользователей</Header>
+    {children}
+  </div>
+);
 
 const Home = () => {
+  // const { data: users, error, isLoading } = useGetUsersQuery();
+
+  if (error) {
+    return (
+      <Wrapper>
+        Произошла ошибка при загрузке. Попробуйте обновить страницу.
+      </Wrapper>
+    );
+  }
+
   return (
-    <div className={styles.content}>
-      <Header>Список пользователей</Header>
-      {users.map((user) => (
+    <Wrapper>
+      {users?.map((user) => (
         <Card
           user={user}
-          containerClassName={styles.card_c}
           key={user.id}
+          containerClassName={styles.card}
         />
       ))}
       <footer className={styles.footer}>Найдено 10 пользователей</footer>
-    </div>
+    </Wrapper>
   );
 };
 
