@@ -1,21 +1,19 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 import styles from './Layout.module.scss';
 import Button from '../uiKit/Button';
 
-interface Props {
-  children: React.ReactNode,
-}
 
-const Layout = ({ children }: Props) => {
+const Layout = () => {
   return (
     <main className={styles.main}>
       <aside className={styles.aside}>
         <h2>Сортировка</h2>
-        <Button>по городу</Button>
-        <Button>по компании</Button>
+        <Button onClick={() => console.log('по городу')}>по городу</Button>
+        <Button onClick={() => console.log('по компании')}>по компании</Button>
       </aside>
-      {children}
+      <Outlet />
     </main>
   );
 };

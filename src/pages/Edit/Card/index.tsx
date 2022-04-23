@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import styles from './Card.module.scss';
@@ -19,12 +18,6 @@ const Card = ({ user, containerClassName }: Props) => {
     { title: 'компания', value: user.company.name },
   ];
 
-  const navigate = useNavigate();
-
-  const onClick = () => {
-    navigate(`${user.id}/edit`);
-  };
-
   return (
     <article className={cn(styles.card, containerClassName)}>
       <div className={styles.details}>
@@ -39,12 +32,7 @@ const Card = ({ user, containerClassName }: Props) => {
           </div>
         ))}
       </div>
-      <Button
-        onClick={onClick}
-        overridingClass={styles.button}
-      >
-        Подробнее
-      </Button>
+      <Button onClick={(e) => console.log('e = ', e)} overridingClass={styles.button}>Подробнее</Button>
     </article>
   );
 };
