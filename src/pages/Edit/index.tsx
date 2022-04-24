@@ -1,37 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import styles from './Edit.module.scss';
 import Header from '../../components/Header';
 import Card from './Card';
-// import { useGetUsersQuery } from '../../services/users';
+import { selectUserById } from '../../services/users';
+import { useAppSelector } from '../../app/hooks';
 
 
 const error = false;
-// const isLoading = false;
-const user = {
-  id: 1,
-  name: 'Leanne Graham',
-  username: 'Bret',
-  email: 'Sincere@april.biz',
-  address: {
-    street: 'Kulas Light',
-    suite: 'Apt. 556',
-    city: 'Gwenborough',
-    zipcode: '92998-3874',
-    geo: {
-      lat: '-37.3159',
-      lng: '81.1496',
-    },
-  },
-  phone: '1-770-736-8031 x56442',
-  website: 'hildegard.org',
-  company: {
-    name: 'Romaguera-Crona',
-    catchPhrase: 'Multi-layered client-server neural-net',
-    bs: 'harness real-time e-markets',
-  },
-};
-
 
 interface Props {
   children: React.ReactNode,
@@ -45,7 +22,15 @@ const Wrapper = ({ children }: Props) => (
 );
 
 const Home = () => {
-  // const { data: users, error, isLoading } = useGetUsersQuery();
+  const { id } = useParams();
+  const user = useAppSelector((state) => selectUserById(state, Number(id)));
+
+  // const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   if (users.length === 0) {
+  //     dispatch(fetchUsers());
+  //   }
+  // }, [users]);
 
   if (error) {
     return (
@@ -58,11 +43,13 @@ const Home = () => {
   return (
     <Wrapper>
       {/* {users?.map((user) => ( */}
-      <Card
-        user={user}
-        key={user.id}
-        containerClassName={styles.card}
-      />
+      {user && (
+        <Card
+          user={user}
+          key={user.id}
+          containerClassName={styles.card}
+        />
+      )}
       {/* ))} */}
       <footer className={styles.footer}>Найдено 10 пользователей</footer>
     </Wrapper>

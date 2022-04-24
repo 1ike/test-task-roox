@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styles from './Home.module.scss';
 import Header from '../../components/Header';
 import Card from './Card';
-import { fetchUsers, selectAllUsers } from '../../services/users';
+import { fetchUsers, selectAllUsers, selectTotalUsers } from '../../services/users';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 
@@ -256,6 +256,7 @@ const Wrapper = ({ children }: Props) => (
 
 const Home = () => {
   const users = useAppSelector(selectAllUsers);
+  const usersTotal = useAppSelector(selectTotalUsers);
   // const isLoading = useAppSelector(selectIsUsersLoading);
 
   const dispatch = useAppDispatch();
@@ -275,14 +276,20 @@ const Home = () => {
 
   return (
     <Wrapper>
-      {users?.map((user) => (
+      {users.map((user) => (
         <Card
           user={user}
           key={user.id}
           containerClassName={styles.card}
         />
       ))}
-      <footer className={styles.footer}>Найдено 10 пользователей</footer>
+      <footer className={styles.footer}>
+        Найдено
+        {' '}
+        {usersTotal}
+        {' '}
+        пользователей
+      </footer>
     </Wrapper>
   );
 };
