@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack');
+require('dotenv').config()
 
 
 module.exports = {
@@ -62,12 +64,20 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     clean: true,
+  },
+  devServer: {
+    historyApiFallback: true,
+    port: process.env.REACT_APP_DEV_SERVER_PORT,
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'RooX test task',
       template: 'index.html'
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env),
+    }),
   ]
 };

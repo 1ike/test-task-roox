@@ -7,7 +7,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import { store } from './services/store';
+import { store } from './app/store';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Edit from './pages/Edit';

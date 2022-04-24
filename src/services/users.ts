@@ -1,5 +1,19 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+// import { createSelector } from 'reselect';
 
+import API from '../app/API';
+import type { RootState } from '../app/store';
+
+
+export enum RequestStatus {
+  Idle = 'idle',
+  Pending = 'pending',
+  Fulfilled = 'fulfilled',
+  Rejected = 'rejected',
+}
+
+
+export type ID = number;
 
 export interface Address {
   street: string,
@@ -12,7 +26,7 @@ export interface Company {
 }
 
 export interface User {
-  id: number
+  id: ID,
   name: string,
   username: string,
   email: string,
@@ -23,15 +37,48 @@ export interface User {
 }
 
 
-export const usersApi = createApi({
-  reducerPath: 'usersApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
-  keepUnusedDataFor: 3600,
-  endpoints: (builder) => ({
-    getUsers: builder.query<User[], void>({
-      query: () => 'users',
-    }),
-  }),
+export const fetchUsers = createAsyncThunk('users/fetchAll', API.fetchAllUsers);
+
+const usersAdapter = createEntityAdapter<User>();
+const initialState = usersAdapter.getInitialState({
+  loading: RequestStatus.Idle,
 });
 
-export const { useGetUsersQuery } = usersApi;
+export const usersReducerName = 'users';
+export const slice = createSlice({
+  name: usersReducerName,
+  initialState,
+  /* eslint-disable no-param-reassign */
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchUsers.pending, (state) => {
+      if (state.loading === RequestStatus.Idle) {
+        state.loading = RequestStatus.Pending;
+      }
+    });
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      if (state.loading === RequestStatus.Pending) {
+        usersAdapter.upsertMany(state, action.payload);
+        state.loading = RequestStatus.Idle;
+      }
+    });
+  },
+  /* eslint-enable no-param-reassign */
+});
+
+const { reducer } = slice;
+export default reducer;
+
+export const {
+  selectById: selectUserById,
+  selectIds: selectUserIds,
+  selectEntities: selectUserEntities,
+  selectAll: selectAllUsers,
+  selectTotal: selectTotalUsers,
+} = usersAdapter.getSelectors((state: RootState) => state.users);
+
+
+export const selectIsUsersLoading = (state: RootState) => (
+  state.users.loading === RequestStatus.Pending
+);
+
