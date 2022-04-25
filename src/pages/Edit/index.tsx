@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import styles from './Edit.module.scss';
 import Header from '../../components/Header';
 import Card from './Card';
-import { selectUserById } from '../../services/users';
-import { useAppSelector } from '../../app/hooks';
+import { fetchUserById, selectUserById } from '../../services/users';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 
 const error = false;
@@ -22,15 +22,16 @@ const Wrapper = ({ children }: Props) => (
 );
 
 const Home = () => {
-  const { id } = useParams();
-  const user = useAppSelector((state) => selectUserById(state, Number(id)));
+  const params = useParams();
+  const id = Number(params.id);
+  const user = useAppSelector((state) => selectUserById(state, id));
 
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if (users.length === 0) {
-  //     dispatch(fetchUsers());
-  //   }
-  // }, [users]);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!user) {
+      dispatch(fetchUserById(id));
+    }
+  }, [user, id]);
 
   if (error) {
     return (

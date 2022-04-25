@@ -13,7 +13,7 @@ const fetchAllUsers = (): Promise<(User[])> => fetch(
   });
 
 
-const fetchUserByIds = (id: ID): Promise<(User)> => fetch(
+const fetchUserById = (id: ID): Promise<(User)> => fetch(
   `${API_BASE_URL}${API_USERS_RESOURCE_PATH}${id}`,
   { method: 'GET' },
 )
@@ -26,5 +26,5 @@ const fetchUserByIds = (id: ID): Promise<(User)> => fetch(
 
 export default {
   fetchAllUsers,
-  fetchUserByIds,
+  fetchUserById,
 };
