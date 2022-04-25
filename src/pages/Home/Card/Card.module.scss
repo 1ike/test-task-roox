@@ -26,8 +26,14 @@
 }
 
 .button {
+  $color: #4b51ef;
+
   align-self: flex-end;
   padding: 0;
-  color: #4b51ef;
+  color: $color;
   background-color: transparent;
+  &:active {
+    background-color: transparent;
+    color: lighten($color, 7);
+  }
 }

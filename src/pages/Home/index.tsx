@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import styles from './Home.module.scss';
 import Header from '../../components/Header';
 import Card from './Card';
-import { fetchUsers, selectAllUsers, selectTotalUsers } from '../../services/users';
+import { fetchUsers, selectTotalUsers } from '../../services/users';
+import { selectUsersSelector } from '../../services/sortBy';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 
@@ -255,13 +256,15 @@ const Wrapper = ({ children }: Props) => (
 );
 
 const Home = () => {
-  const users = useAppSelector(selectAllUsers);
+  const usersSelector = useAppSelector(selectUsersSelector);
+  const users = useAppSelector(usersSelector);
+
   const usersTotal = useAppSelector(selectTotalUsers);
   // const isLoading = useAppSelector(selectIsUsersLoading);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (users.length === 0) {
+    if (users.length <= 1) {
       dispatch(fetchUsers());
     }
   }, [users]);

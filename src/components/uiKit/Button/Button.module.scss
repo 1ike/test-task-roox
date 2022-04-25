@@ -1,10 +1,16 @@
 .button {
   @include small-text;
 
+  $background-color: #4b51ef;
+
   padding: 5px 15px;
   border-radius: 5px;
   border: none;
   color: white;
-  background-color: #4b51ef;
+  background-color: $background-color;
   cursor: pointer;
+
+  &:active {
+    background-color: lighten($background-color, 5);
+  }
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-// import { createSelector } from 'reselect';
+import { createSelector } from 'reselect';
 
 import API from '../app/API';
 import type { RootState } from '../app/store';
@@ -98,3 +98,36 @@ export const selectIsUserLoading = (state: RootState) => (
   state.users.loadingUser === RequestStatus.Pending
 );
 
+export const selectAllUsersSortedByCity = createSelector(
+  selectAllUsers,
+  (users) => [...users].sort((a, b) => {
+    const aCity = a.address.city;
+    const bCity = b.address.city;
+
+    if (aCity < bCity) {
+      return -1;
+    }
+    if (aCity > bCity) {
+      return 1;
+    }
+
+    return 0;
+  }),
+);
+
+export const selectAllUsersSortedByCompany = createSelector(
+  selectAllUsers,
+  (users) => [...users].sort((a, b) => {
+    const aCompanyName = a.company.name;
+    const bCompanyName = b.company.name;
+
+    if (aCompanyName < bCompanyName) {
+      return -1;
+    }
+    if (aCompanyName > bCompanyName) {
+      return 1;
+    }
+
+    return 0;
+  }),
+);
