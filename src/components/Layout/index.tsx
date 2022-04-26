@@ -37,7 +37,9 @@ const Layout = () => {
         </Button>
       </aside>
 
-      <Outlet />
+      <div className={styles.content}>
+        <Outlet />
+      </div>
     </main>
   );
 };

@@ -1,0 +1,43 @@
+.form {
+  padding: 20px 6px 19px 12px;
+  border: 1px solid #f3f3f3;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.field {
+  max-width: 211px;
+  margin-bottom: 10px;
+}
+
+.label {
+  display: block;
+  font-size: 8px;
+  line-height: 9px;
+}
+
+.input {
+  width: 100%;
+  display: block;
+  margin-top: 3px;
+  padding: 5px 10px;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.buttonSubmit {
+  $background-color: #52cf4f;
+
+  background-color: $background-color;
+
+  &:active {
+    background-color: lighten($background-color, 5);
+  }
+}

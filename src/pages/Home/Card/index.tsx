@@ -26,8 +26,8 @@ const Card = ({ user, containerClassName }: Props) => {
   };
 
   return (
-    <article className={cn(styles.card, containerClassName)}>
-      <div className={styles.details}>
+    <div className={cn(styles.card, containerClassName)}>
+      <div>
         {userDetails.map((detail, idx) => (
           // eslint-disable-next-line react/no-array-index-key
           <div className={styles.detail} key={idx}>
@@ -45,7 +45,7 @@ const Card = ({ user, containerClassName }: Props) => {
       >
         Подробнее
       </Button>
-    </article>
+    </div>
   );
 };
 

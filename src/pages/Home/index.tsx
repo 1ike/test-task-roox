@@ -279,20 +279,22 @@ const Home = () => {
 
   return (
     <Wrapper>
-      {users.map((user) => (
-        <Card
-          user={user}
-          key={user.id}
-          containerClassName={styles.card}
-        />
-      ))}
-      <footer className={styles.footer}>
-        Найдено
-        {' '}
-        {usersTotal}
-        {' '}
-        пользователей
-      </footer>
+      <div className={styles.list}>
+        {users.map((user) => (
+          <Card
+            user={user}
+            key={user.id}
+            containerClassName={styles.card}
+          />
+        ))}
+        <footer className={styles.footer}>
+          Найдено
+          {' '}
+          {usersTotal}
+          {' '}
+          пользователей
+        </footer>
+      </div>
     </Wrapper>
   );
 };

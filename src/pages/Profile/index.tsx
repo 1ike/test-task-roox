@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import styles from './Edit.module.scss';
+import styles from './Profile.module.scss';
 import Header from '../../components/Header';
-import Card from './Card';
+import Form from './Form';
 import { fetchUserById, selectUserById } from '../../services/users';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import Button from '../../components/uiKit/Button/index';
 
 
 const error = false;
+// const loading = false;
 
 interface Props {
   children: React.ReactNode,
@@ -16,7 +18,14 @@ interface Props {
 
 const Wrapper = ({ children }: Props) => (
   <div className={styles.content}>
-    <Header>Список пользователей</Header>
+    <header className={styles.header}>
+      <Header>Профиль пользователя</Header>
+      <Button
+        onClick={() => { }}
+      >
+        Редактировать
+      </Button>
+    </header>
     {children}
   </div>
 );
@@ -43,16 +52,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      {/* {users?.map((user) => ( */}
-      {user && (
-        <Card
-          user={user}
-          key={user.id}
-          containerClassName={styles.card}
-        />
-      )}
-      {/* ))} */}
-      <footer className={styles.footer}>Найдено 10 пользователей</footer>
+      {user && <Form user={user} />}
     </Wrapper>
   );
 };

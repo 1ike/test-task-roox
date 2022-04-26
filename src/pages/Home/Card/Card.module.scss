@@ -1,13 +1,9 @@
 .card {
   display: flex;
-  width: 420px;
+  justify-content: space-between;
   border-radius: 8px;
   padding: 10px;
   background: #f3f3f3;
-}
-
-.details {
-  flex-grow: 1;
 }
 
 @mixin detail-text {

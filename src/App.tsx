@@ -10,7 +10,7 @@ import {
 import { store } from './app/store';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import Edit from './pages/Edit';
+import Edit from './pages/Profile';
 
 
 function App() {
