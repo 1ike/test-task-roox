@@ -45,7 +45,7 @@ const Home = () => {
     }
   }, [user, id]);
 
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const edit = () => setDisabled(!disabled);
 

@@ -1,7 +1,11 @@
 .form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields {
   padding: 20px 6px 19px 12px;
   border: 1px solid #f3f3f3;
-  box-sizing: border-box;
   border-radius: 8px;
 }
 
@@ -21,7 +25,7 @@
   display: block;
   margin-top: 3px;
   padding: 5px 10px;
-  border: 1px solid #d8d8d8;
+  border: 1px solid;
   border-radius: 5px;
   font-size: 10px;
   line-height: 12px;
@@ -30,18 +34,26 @@
     color: rgba(0, 0, 0, 0.3);
   }
 }
-
-.footer {
-  margin-top: 10px;
-  text-align: right;
+.inputValid {
+  border-color: #d8d8d8;
+}
+.inputInvalid {
+  border-color: #d91313;
 }
 
 .buttonSubmit {
+  margin-top: 10px;
+  align-self: flex-end;
+
   $background-color: #52cf4f;
 
   background-color: $background-color;
 
   &:active {
     background-color: lighten($background-color, 5);
+  }
+
+  &:disabled {
+    background-color: #afafaf;
   }
 }
