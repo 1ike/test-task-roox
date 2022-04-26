@@ -8,9 +8,10 @@ import { User } from '../../../services/users';
 
 interface Props {
   user: User,
+  disabled?: boolean
 }
 
-const Form = ({ user }: Props) => {
+const Form = ({ user, disabled }: Props) => {
   const formData = [
     {
       label: 'Name',
@@ -52,14 +53,19 @@ const Form = ({ user }: Props) => {
   return (
     <>
       {user && (
-        <form className={styles.form}>
+        <form className={styles.form} onChange={() => { }}>
           {formData.map((field) => (
-            <div className={styles.field}>
+            <div className={styles.field} key={field.label}>
               <label className={styles.label}>
                 {field.label}
                 :
                 {' '}
-                <input type={field.type || 'text'} value={field.value} className={styles.input} />
+                <input
+                  type={field.type || 'text'}
+                  value={field.value}
+                  className={styles.input}
+                  disabled={disabled}
+                />
               </label>
             </div>
           ))}
