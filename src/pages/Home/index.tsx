@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import Card from './Card';
 import { fetchUsers, selectTotalUsers } from '../../services/users';
 import { selectUsersSelector } from '../../services/sortBy';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector, useTitle } from '../../app/hooks';
 
 
 const error = false;
@@ -256,6 +256,8 @@ const Wrapper = ({ children }: Props) => (
 );
 
 const Home = () => {
+  useTitle('Список пользователей');
+
   const usersSelector = useAppSelector(selectUsersSelector);
   const users = useAppSelector(usersSelector);
 

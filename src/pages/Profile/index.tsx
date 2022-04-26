@@ -5,7 +5,7 @@ import styles from './Profile.module.scss';
 import Header from '../../components/Header';
 import Form from './Form';
 import { fetchUserById, selectUserById } from '../../services/users';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector, useTitle } from '../../app/hooks';
 import Button from '../../components/uiKit/Button/index';
 
 
@@ -34,6 +34,8 @@ const Wrapper = ({ children, edit }: Props) => (
 );
 
 const Home = () => {
+  useTitle('Редактирование профиля');
+
   const params = useParams();
   const id = Number(params.id);
   const user = useAppSelector((state) => selectUserById(state, id));
