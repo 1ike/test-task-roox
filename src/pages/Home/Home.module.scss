@@ -6,7 +6,7 @@
   max-width: 420px;
 }
 
-.card {
+@mixin card-margin {
   margin-bottom: 24px;
 
   &:last-of-type {
@@ -14,8 +14,19 @@
   }
 }
 
+.card {
+  @include card-margin;
+}
+
 .footer {
   @include small-text;
 
   text-align: right;
+}
+
+.skeleton {
+  &CardContainer {
+    display: block;
+    @include card-margin;
+  }
 }

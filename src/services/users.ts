@@ -1,4 +1,6 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk, createEntityAdapter, createSlice, SerializedError,
+} from '@reduxjs/toolkit';
 import { createSelector } from 'reselect';
 
 import API from '../app/API';
@@ -40,8 +42,12 @@ export interface User {
 export const fetchUsers = createAsyncThunk('users/fetchAll', API.fetchAllUsers);
 export const fetchUserById = createAsyncThunk('users/fetchById', API.fetchUserById);
 
+interface InitialState {
+  loading: RequestStatus,
+  error?: SerializedError
+}
 const usersAdapter = createEntityAdapter<User>();
-const initialState = usersAdapter.getInitialState({
+const initialState = usersAdapter.getInitialState<InitialState>({
   loading: RequestStatus.Idle,
 });
 
@@ -62,6 +68,9 @@ export const slice = createSlice({
         usersAdapter.upsertMany(state, action.payload);
         state.loading = RequestStatus.Idle;
       }
+    });
+    builder.addCase(fetchUsers.rejected, (state, action) => {
+      state.error = action.error;
     });
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
       usersAdapter.setOne(state, action.payload);
@@ -85,6 +94,7 @@ export const {
 export const selectIsUsersLoading = (state: RootState) => (
   state.users.loading === RequestStatus.Pending
 );
+export const selectUsersFetchingError = (state: RootState) => state.users.error;
 
 
 export const selectAllUsersSortedByCity = createSelector(
