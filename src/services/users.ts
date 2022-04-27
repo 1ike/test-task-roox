@@ -75,6 +75,9 @@ export const slice = createSlice({
         state.loadingUser = RequestStatus.Idle;
       }
     });
+    builder.addCase(fetchUserById.rejected, (state) => {
+      state.loadingUser = RequestStatus.Idle;
+    });
   },
   /* eslint-enable no-param-reassign */
 });

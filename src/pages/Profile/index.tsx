@@ -42,9 +42,11 @@ const Home = () => {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    if (!user) {
-      dispatch(fetchUserById(id));
-    }
+    const promise = !user ? dispatch(fetchUserById(id)) : null;
+
+    return () => {
+      if (promise) promise.abort();
+    };
   }, [user, id]);
 
   const [disabled, setDisabled] = useState(true);
