@@ -43,7 +43,6 @@ export const fetchUserById = createAsyncThunk('users/fetchById', API.fetchUserBy
 const usersAdapter = createEntityAdapter<User>();
 const initialState = usersAdapter.getInitialState({
   loading: RequestStatus.Idle,
-  loadingUser: RequestStatus.Idle,
 });
 
 export const usersReducerName = 'users';
@@ -64,19 +63,8 @@ export const slice = createSlice({
         state.loading = RequestStatus.Idle;
       }
     });
-    builder.addCase(fetchUserById.pending, (state) => {
-      if (state.loadingUser === RequestStatus.Idle) {
-        state.loadingUser = RequestStatus.Pending;
-      }
-    });
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
-      if (state.loadingUser === RequestStatus.Pending) {
-        usersAdapter.setOne(state, action.payload);
-        state.loadingUser = RequestStatus.Idle;
-      }
-    });
-    builder.addCase(fetchUserById.rejected, (state) => {
-      state.loadingUser = RequestStatus.Idle;
+      usersAdapter.setOne(state, action.payload);
     });
   },
   /* eslint-enable no-param-reassign */
@@ -97,9 +85,7 @@ export const {
 export const selectIsUsersLoading = (state: RootState) => (
   state.users.loading === RequestStatus.Pending
 );
-export const selectIsUserLoading = (state: RootState) => (
-  state.users.loadingUser === RequestStatus.Pending
-);
+
 
 export const selectAllUsersSortedByCity = createSelector(
   selectAllUsers,

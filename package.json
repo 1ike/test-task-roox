@@ -22,6 +22,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-hook-form": "^7.30.0",
+    "react-loading-skeleton": "^3.1.0",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "reselect": "^4.1.5",
@@ -58,7 +59,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "npm run eslint",
+    "src/**/*.{js,jsx,ts,tsx}": "eslint --fix",
     "src/**/*.{css,scss,json}": "prettier --write"
   }
 }

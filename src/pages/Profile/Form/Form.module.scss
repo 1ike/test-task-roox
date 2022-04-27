@@ -57,3 +57,13 @@
     background-color: #afafaf;
   }
 }
+
+.skeleton {
+  &Field {
+    margin-top: 3px;
+    display: block;
+    height: 24px;
+    border: 1px solid;
+    border-color: #d8d8d8;
+  }
+}

@@ -9,9 +9,6 @@ import { useAppDispatch, useAppSelector, useTitle } from '../../app/hooks';
 import Button from '../../components/uiKit/Button/index';
 
 
-const error = false;
-// const loading = false;
-
 interface Props {
   children: React.ReactNode,
   edit?: () => void,
@@ -21,28 +18,32 @@ const Wrapper = ({ children, edit }: Props) => (
   <div className={styles.content}>
     <header className={styles.header}>
       <Header>Профиль пользователя</Header>
-      {edit && (
-        <Button
-          onClick={edit}
-        >
-          Редактировать
-        </Button>
-      )}
+      <Button
+        onClick={edit}
+        {...(edit ? null : { overridingClass: styles.invisible })}
+      >
+        Редактировать
+      </Button>
     </header>
     {children}
   </div>
 );
 
-const Home = () => {
+const Profile = () => {
   useTitle('Редактирование профиля');
 
   const params = useParams();
   const id = Number(params.id);
   const user = useAppSelector((state) => selectUserById(state, id));
 
+
+  const [error, setError] = useState(null);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     const promise = !user ? dispatch(fetchUserById(id)) : null;
+
+    promise?.unwrap().catch((e) => setError(e));
 
     return () => {
       if (promise) promise.abort();
@@ -63,9 +64,9 @@ const Home = () => {
 
   return (
     <Wrapper edit={edit}>
-      {user && <Form user={user} disabled={disabled} />}
+      <Form user={user} disabled={disabled} loading={!user} />
     </Wrapper>
   );
 };
 
-export default Home;
+export default Profile;

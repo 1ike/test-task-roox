@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import cn from 'classnames';
+import Skeleton from 'react-loading-skeleton';
 
 import styles from './Form.module.scss';
 import Button from '../../../components/uiKit/Button/index';
@@ -24,8 +25,9 @@ const schema = yup.object({
 
 
 interface Props {
-  user: User,
+  user?: User,
   disabled?: boolean
+  loading?: boolean
 }
 
 const Form = ({ user, disabled }: Props) => {
@@ -33,61 +35,65 @@ const Form = ({ user, disabled }: Props) => {
     {
       name: 'name',
       label: 'Name',
-      value: user.name,
+      value: user?.name,
     },
     {
       name: 'username',
       label: 'User name',
-      value: user.username,
+      value: user?.username,
     },
     {
       name: 'email',
       label: 'E-mail',
-      value: user.email,
+      value: user?.email,
       type: 'email',
     },
     {
       name: 'street',
       label: 'Street',
-      value: user.address?.street,
+      value: user?.address?.street,
     },
     {
       name: 'city',
       label: 'City',
-      value: user.address?.city,
+      value: user?.address?.city,
     },
     {
       name: 'zipcode',
       label: 'Zip code',
-      value: user.address?.zipcode,
+      value: user?.address?.zipcode,
     },
     {
       name: 'phone',
       label: 'Phone',
-      value: user.phone,
+      value: user?.phone,
       type: 'phone',
     },
     {
       name: 'website',
       label: 'Website',
-      value: user.website,
+      value: user?.website,
     },
   ];
 
-  const defaultValues: { [key: string]: string } = {};
-  formData.forEach((field) => {
-    defaultValues[field.name] = field.value;
-  });
+  console.log('user = ', user);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register, handleSubmit, formState: { errors }, setValue,
+  } = useForm({
     resolver: yupResolver(schema),
-    defaultValues,
     shouldFocusError: true,
   });
 
+  if (user) {
+    formData.forEach((field) => {
+      setValue(field.name, field.value);
+    });
+  }
+
   const onSubmit = (data: any) => console.log(JSON.stringify(data));
 
-  return user && (
+  return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.fields}>
         {formData.map((field) => (
@@ -96,21 +102,27 @@ const Form = ({ user, disabled }: Props) => {
               {field.label}
               :
               {' '}
-              <input
-                type={field.type || 'text'}
-                className={cn(
-                  styles.input,
-                  errors[field.name] ? styles.inputInvalid : styles.inputValid,
-                )}
-                disabled={disabled}
-                {...register(field.name)}
-              />
+              {user ? (
+                <input
+                  type={field.type || 'text'}
+                  className={cn(
+                    styles.input,
+                    errors[field.name] ? styles.inputInvalid : styles.inputValid,
+                  )}
+                  disabled={disabled}
+                  {...register(field.name)}
+                />
+              ) : <Skeleton className={styles.skeletonField} />}
             </label>
           </div>
         ))}
         <label className={styles.label}>
           Comment:
-          <textarea className={cn(styles.input, styles.inputValid)} {...register('comment')} />
+          <textarea
+            className={cn(styles.input, styles.inputValid)}
+            disabled={disabled}
+            {...register('comment')}
+          />
         </label>
       </div>
       <Button
@@ -123,6 +135,5 @@ const Form = ({ user, disabled }: Props) => {
     </form>
   );
 };
-
 
 export default Form;

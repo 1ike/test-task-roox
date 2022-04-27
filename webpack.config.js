@@ -4,6 +4,27 @@ const webpack = require('webpack');
 require('dotenv').config()
 
 
+const postcssLoader = {
+  loader: 'postcss-loader',
+  options: {
+    sourceMap: true,
+    postcssOptions: {
+      plugins: [
+        [
+          "autoprefixer",
+          {
+            "overrideBrowserslist": [
+              "last 2 version",
+              "> 1%",
+              "IE 10"
+            ]
+          },
+        ],
+      ],
+    },
+  }
+};
+
 module.exports = {
   entry: './src/index.tsx',
   module: {
@@ -12,6 +33,14 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          postcssLoader,
+        ]
       },
       {
         test: /\.scss$/,
@@ -26,29 +55,13 @@ module.exports = {
               },
               importLoaders: 1,
             }
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              postcssOptions: {
-                plugins: [
-                  [
-                    "autoprefixer",
-                    {
-                      "overrideBrowserslist": [
-                        "last 2 version",
-                        "> 1%",
-                        "IE 10"
-                      ]
-                    },
-                  ],
-                ],
-              },
-            }
-          }, {
+          },
+          postcssLoader,
+          {
             loader: 'sass-loader',
             options: { sourceMap: true }
-          }, {
+          },
+          {
             loader: 'sass-resources-loader',
             options: {
               resources: 'src/styles/resources.scss',
