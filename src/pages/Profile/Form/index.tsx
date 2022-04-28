@@ -76,8 +76,6 @@ const Form = ({ user, disabled }: Props) => {
     },
   ];
 
-  console.log('user = ', user);
-
   const {
     register, handleSubmit, formState: { errors }, setValue,
   } = useForm({
